@@ -1,7 +1,8 @@
 # E-Commerce-Website
  An e-commerce website using node js .
 
-$ express --hbs \n
-$ npm install   \n
-$ npm install nodemon   \n
-$ nodemon bin/www   \n
+$ express --hbs <br />
+$ npm install   <br />
+$ npm install nodemon   <br />
+$ nodemon bin/www   <br />
+$ npm install express-handlebars

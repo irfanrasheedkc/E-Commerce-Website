@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
       image:"https://i02.appmifile.com/430_operator_in/30/01/2021/e95cb65d71fa8a1a5e7ee201e1a63d12!800x800!85.png"
     }
   ]
-  res.render('index', {products});
+  res.render('index', {products , admin:false});
 });
 
 module.exports = router;

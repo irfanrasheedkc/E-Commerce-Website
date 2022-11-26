@@ -5,4 +5,5 @@ $ express --hbs <br />
 $ npm install   <br />
 $ npm install nodemon   <br />
 $ nodemon bin/www   <br />
-$ npm install express-handlebars
+$ npm install express-handlebars <br />
+$ npm i mongodb --save <br />

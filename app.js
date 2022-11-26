@@ -10,6 +10,7 @@ var adminRouter = require('./routes/admin');
 var hbs = require('express-handlebars');
 var fileUpload=require('express-fileupload');
 var db=require('./config/connection.js');
+var productHelper = require('./helpers/product-helpers.js');
 
 var app = express();
 

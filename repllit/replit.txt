@@ -1,0 +1,1 @@
+For hosting in replit , copy the config folder insted of real config folder

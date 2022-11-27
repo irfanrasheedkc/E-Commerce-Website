@@ -1,0 +1,23 @@
+<form action="/admin/edit-product?id={{product._id}}" method="post" enctype="multipart/form-data">
+    <div class="container" style="margin:auto ; width:70%">
+        <h2 align="center">Edit Product</h2>
+        <div class="form-group">
+            <label for="" >Name</label>
+            <input type="text" name="Name" class="form-control" id="exampleFormControlInput1" placeholder="Name" value="{{product.Name}}">
+        </div>
+        <div class="form-group">
+            <label for="" >Category</label>
+            <input type="text" name="category" class="form-control" id="exampleFormControlInput1" placeholder="Category" value="{{product.category}}">
+        </div>
+        <div class="form-group">
+            <label for="" >Description</label>
+            <input type="text" name="description" class="form-control" id="exampleFormControlInput1" placeholder="Description" value="{{product.description}}">
+        </div>
+        <div class="form-group">
+            <label for="" >Image</label>
+            <img src="/product-images/{{product._id}}.jpg" alt="" style="width:100px;height:auto">
+            <input type="file" name="image" class="form-control-file" id="exampleFormControlFile1">
+        </div>
+        <button class="btn btn-primary" type="submit">Submit form</button>
+    </div>
+</form>

@@ -34,5 +34,17 @@ router.get('/delete-product',(req , res)=>{
   })
 })
 
+router.get('/edit-product',async (req , res)=>{
+  let product =await productHelpers.getProductDetails(req.query.id)
+  console.log(product)
+  res.render('admin/edit-product',{product})
+})
+
+router.post('/edit-product' , (req , res)=>{
+  productHelpers.updateProduct(req.query.id , req.body).then(()=>{
+    console.log("Updated database")
+    res.redirect('/admin')
+  })
+})
 
 module.exports = router;

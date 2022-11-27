@@ -14,7 +14,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login' , function(req , res ){
-  res.render('user/login');
+  if(req.session.loggedIn){
+    res.redirect('/');
+  }else{
+    res.render('user/login',{"loginErr":req.session.loginError});
+    req.session.loginError=false
+  }
 })
 
 router.post('/signup' , function(req , res ){
@@ -29,13 +34,13 @@ router.get('/signup' , function(req , res ){
 
 router.post('/login' , (req , res )=>{
   userHelpers.doLogin(req.body).then((response)=>{
-    console.log("returned is"+response.status)
     if(response.status){
-      req.session.loggedIn=true
+      req.session.loggedIn="Login failed"
       req.session.user=response.user
       res.redirect('/')
     }
     else{
+      req.session.loginError=true
       res.redirect('/login')
     }
   })
@@ -44,5 +49,9 @@ router.post('/login' , (req , res )=>{
 router.get('/logout',(req,res)=>{
   req.session.destroy();
   res.redirect('/');
+})
+
+router.get('/cart',(req , res)=>{
+  res.render('user/cart')
 })
 module.exports = router;

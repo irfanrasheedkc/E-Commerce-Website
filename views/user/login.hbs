@@ -11,6 +11,9 @@
                 placeholder="Password">
         </div>
         <a href = "/signup">Create new account?</a><br><br>
+        {{#if loginErr}}
+            <p class="error" style="color:red">Login failed</p>
+        {{/if}}
         <button class="btn btn-primary" style="margin:auto;width:100%" type="submit">Login</button>
     </div>
 </form>

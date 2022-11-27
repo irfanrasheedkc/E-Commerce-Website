@@ -55,3 +55,7 @@ router.get('/cart',(req , res)=>{
   res.render('user/cart')
 })
 module.exports = router;
+
+router.get('/uptime',(req,res)=>{
+  res.render('user/uptime')
+})

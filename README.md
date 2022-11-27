@@ -7,3 +7,6 @@ $ npm install nodemon   <br />
 $ nodemon bin/www   <br />
 $ npm install express-handlebars <br />
 $ npm i mongodb --save <br />
+
+Deployed version link :<br>
+https://shopping-cart-k0np.onrender.com

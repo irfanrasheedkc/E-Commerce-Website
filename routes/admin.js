@@ -42,8 +42,17 @@ router.get('/edit-product',async (req , res)=>{
 
 router.post('/edit-product' , (req , res)=>{
   productHelpers.updateProduct(req.query.id , req.body).then(()=>{
-    console.log("Updated database")
     res.redirect('/admin')
+    if(req.files.Image){
+      let image=req.files.Image
+      image.mv('./public/product-images/'+req.query.id+'.jpg' , (err,done)=>{
+        if(!err){
+          res.render("admin")
+        }
+        else
+          console.log(err)
+      })
+    }
   })
 })
 

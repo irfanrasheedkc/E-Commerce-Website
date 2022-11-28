@@ -15,9 +15,15 @@
         </div>
         <div class="form-group">
             <label for="" >Image</label>
-            <img src="/product-images/{{product._id}}.jpg" alt="" style="width:100px;height:auto">
-            <input type="file" name="Image" class="form-control-file" id="exampleFormControlFile1">
+            <img src="/product-images/{{product._id}}.jpg" alt="" style="width:100px;height:auto" id="imgView">
+            <input type="file" name="Image" class="form-control-file" id="exampleFormControlFile1" onchange="viewImage(event)">
         </div>
         <button class="btn btn-primary" type="submit">Submit form</button>
     </div>
 </form>
+
+<script>
+    function viewImage(event){
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>

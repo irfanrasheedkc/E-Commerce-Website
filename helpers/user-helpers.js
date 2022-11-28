@@ -3,6 +3,7 @@ var collection = require('../config/collections')
 var objectId = require('mongodb').ObjectId
 
 const bcrypt = require('bcrypt')
+const { Collection } = require('mongodb')
 
 module.exports = {
     doSignup: (userdata) => {
@@ -58,6 +59,32 @@ module.exports = {
                     resolve()
                 })
             }
+        })
+    },
+    getCartProducts:(userId)=>{
+        return new Promise(async(resolve , reject)=>{
+            let cartItems = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                {
+                    $match:{user:objectId(userId)}
+                },
+                {
+                    $lookup:{
+                        from:collection.PRODUCT_COLLECTION,
+                        let:{proList:'$products'},
+                        pipeline:[
+                            {
+                                $match:{
+                                    $expr:{
+                                        $in:['$_id','$$proList']
+                                    }
+                                }
+                            }
+                        ],
+                        as:'cartItems'
+                    }
+                } 
+            ]).toArray()
+            resolve(cartItems[0].cartItems)
         })
     }
 }

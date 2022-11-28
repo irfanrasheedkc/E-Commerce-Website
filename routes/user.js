@@ -62,8 +62,11 @@ router.get('/logout',(req,res)=>{
   res.redirect('/');
 })
 
-router.get('/cart',verifyLogin,(req , res)=>{
-  res.render('user/cart')
+router.get('/cart',verifyLogin,async (req , res)=>{
+  let products = await userHelpers.getCartProducts(req.session.user._id).then((products)=>{
+    console.log(products)
+    res.render('user/cart', {products});
+  })
 })
 
 router.get('/uptime',(req,res)=>{
@@ -76,5 +79,6 @@ router.get('/add-to-cart',verifyLogin,(req,res)=>{
     res.redirect('/')
   })
 })
+
 
 module.exports = router;

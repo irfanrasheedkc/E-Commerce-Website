@@ -43,7 +43,8 @@ router.get('/edit-product',async (req , res)=>{
 router.post('/edit-product' , (req , res)=>{
   productHelpers.updateProduct(req.query.id , req.body).then(()=>{
     res.redirect('/admin')
-    if(req.files.Image){
+    if(req.files){
+    if(req.files.image){
       let image=req.files.Image
       image.mv('./public/product-images/'+req.query.id+'.jpg' , (err,done)=>{
         if(!err){
@@ -53,6 +54,7 @@ router.post('/edit-product' , (req , res)=>{
           console.log(err)
       })
     }
+  }
   })
 })
 

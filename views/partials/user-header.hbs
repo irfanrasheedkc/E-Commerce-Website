@@ -141,7 +141,7 @@
           <a class="nav-link" href="/">Products <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/cart">Cart</a>
+          <a class="nav-link" href="/cart">Cart<span class="badge badge-primary" id="cart-count">{{cartCount}}</span></a>
         </li>
         {{#if user}}
         <li class="nav-item">
@@ -153,16 +153,16 @@
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           {{#if user}}
-            {{user.Name}}
+          {{user.Name}}
           {{else}}
-            Account
+          Account
           {{/if}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
           {{#if user}}
-            <a class="dropdown-item" href="/logout" type="button">Logout</a>
+          <a class="dropdown-item" href="/logout" type="button">Logout</a>
           {{else}}
-            <a class="dropdown-item" href="/login" type="button">Login</a>
+          <a class="dropdown-item" href="/login" type="button">Login</a>
           {{/if}}
         </div>
       </div>

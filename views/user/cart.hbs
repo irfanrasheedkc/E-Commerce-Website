@@ -13,14 +13,16 @@
             <tbody>
                 {{#each products}}
                 <tr style="height:75px;text-align: center;vertical-align: middle">
-                    <td>{{@index}}</td>
+                    {{#each this.product}}
+                    {{!-- <td>{{@index}}</td> --}}
                     <td scope="row">
                         <img src='/product-images/{{this._id}}.jpg' style="height:75px;weight:auto">
                     </td>
                     <td style="width:20%">{{this.Name}}</td>
-                    <td><button>-</button>1<button>+</button></td>
+                    {{/each}}
+                    <td><button>-</button>{{this.quantity}}<button>+</button></td>
                     <td><a href="" class="btn btn-primary">Delete</a></td>
-                </tr>
+                </tr> 
                 {{/each}}
             </tbody>
         </table>

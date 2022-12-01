@@ -1,4 +1,4 @@
-const { getCartCount } = require("../../helpers/user-helpers");
+// const { getCartCount } = require("../../helpers/user-helpers");
 
 function addToCart(proId){
     console.log("Going");

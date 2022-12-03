@@ -13,18 +13,48 @@
             <tbody>
                 {{#each products}}
                 <tr style="height:75px;text-align: center;vertical-align: middle">
-                    {{#each this.product}}
                     {{!-- <td>{{@index}}</td> --}}
                     <td scope="row">
-                        <img src='/product-images/{{this._id}}.jpg' style="height:75px;weight:auto">
+                        <img src='/product-images/{{this.product._id}}.jpg' style="height:75px;weight:auto">
                     </td>
-                    <td style="width:20%">{{this.Name}}</td>
-                    {{/each}}
-                    <td><button>-</button>{{this.quantity}}<button>+</button></td>
-                    <td><a href="" class="btn btn-primary">Delete</a></td>
+                    <td style="width:20%">{{this.product.Name}}</td>
+                    <td><button onclick="changeQuantity('{{this._id}}' , '{{this.product._id}}',-1)">-</button>
+                    <span id="{{this.product._id}}">{{this.quantity}}</span>
+                    <button onclick="changeQuantity('{{this._id}}' , '{{this.product._id}}',1)">+</button></td>
+                    <td><a href="" class="btn btn-danger">Remove</a></td>
                 </tr> 
                 {{/each}}
             </tbody>
         </table>
     </div>
 </section>
+
+ <script>
+    function changeQuantity(cartId , proId , count)
+    {
+        let quantity = parseInt(document.getElementById(proId).innerHTML)
+        count = parseInt(count)
+
+        $.ajax({
+            url:'/change-product-quantity',
+            data:{
+                cart:cartId , 
+                product : proId , 
+                count:count,
+                quantity:quantity
+            },
+            method:'post',
+            success:(response)=>{
+                if(response.removeProduct)
+                {
+                    alert("Product removed from cart")
+                    location.reload()
+                }
+                else
+                {
+                    document.getElementById(proId).innerHTML = quantity+count
+                }
+            }
+        })
+    }
+ </script>

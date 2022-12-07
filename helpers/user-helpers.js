@@ -145,5 +145,18 @@ module.exports = {
                     })
             }
         })
-    }
+    },
+    deleteProduct:(proId , Id)=>{
+        console.log(Id)
+        console.log(proId)
+        return new Promise((resolve , reject)=>{
+                db.get().collection(collection.CART_COLLECTION)
+                .updateOne({_id:objectId(Id),'products.item':objectId(proId)},
+                    {
+                        $pull:{products:{item:objectId(proId)}}
+                    }).then((response)=>{
+                        resolve({removeProduct:true})
+                    })
+                }
+    )}
 }

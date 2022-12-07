@@ -3,7 +3,8 @@
         <table class="table mt-5">
             <thead>
                 <tr style="text-align: center;vertical-align: middle">
-                    <th scope="col">No</th>
+                    <th scope="col">Index</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Item</th>
                     <th scope="col">Title</th>
                     <th scope="col">Quantity</th>
@@ -13,11 +14,12 @@
             <tbody>
                 {{#each products}}
                 <tr style="height:75px;text-align: center;vertical-align: middle">
-                    {{!-- <td>{{@index}}</td> --}}
+                    <td>{{@index}}</td>
                     <td scope="row">
                         <img src='/product-images/{{this.product._id}}.jpg' style="height:75px;weight:auto">
                     </td>
                     <td style="width:20%">{{this.product.Name}}</td>
+                    <td style="width:20%">{{this.product.money}}</td>
                     <td><button onclick="changeQuantity('{{this._id}}' , '{{this.product._id}}',-1)">-</button>
                     <span id="{{this.product._id}}">{{this.quantity}}</span>
                     <button onclick="changeQuantity('{{this._id}}' , '{{this.product._id}}',1)">+</button></td>

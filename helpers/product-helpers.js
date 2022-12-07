@@ -39,6 +39,7 @@ module.exports = {
             db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(proId)},{
                 $set:{
                     Name:proDetails.Name,
+                    money:proDetails.money,
                     description:proDetails.description,
                     category:proDetails.category
                 }

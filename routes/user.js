@@ -101,4 +101,8 @@ router.get('/delete-product',(req , res)=>{
   })
 })
 
+router.get('/place-order' , function(req , res ){
+  res.render('user/place-order');
+})
+
 module.exports = router;

@@ -1,3 +1,8 @@
+<style>
+    hr.class-3 {
+        border-top: 1px dashed #8c8b8b;
+    }
+</style>
 <section>
     <div class="container">
         <table class="table mt-5">
@@ -21,42 +26,47 @@
                     <td style="width:20%">{{this.product.Name}}</td>
                     <td style="width:20%">{{this.product.money}}</td>
                     <td><button onclick="changeQuantity('{{this._id}}' , '{{this.product._id}}',-1)">-</button>
-                    <span id="{{this.product._id}}">{{this.quantity}}</span>
-                    <button onclick="changeQuantity('{{this._id}}' , '{{this.product._id}}',1)">+</button></td>
-                    <td><a href="/delete-product?id={{this._id}}&proId={{this.product._id}}" class="btn btn-danger">Remove</a></td>
-                </tr> 
+                        <span id="{{this.product._id}}">{{this.quantity}}</span>
+                        <button onclick="changeQuantity('{{this._id}}' , '{{this.product._id}}',1)">+</button>
+                    </td>
+                    <td><a href="/delete-product?id={{this._id}}&proId={{this.product._id}}"
+                            class="btn btn-danger">Remove</a></td>
+                </tr>
                 {{/each}}
             </tbody>
         </table>
+        <hr class="class-3">
+        <div class="float-right pr-5">
+            <h5 class="float-right mr-5 mt-4">Total Price: <span>&#8377;</span>100000/-</h5>
+            <br>
+                <a href="/place-order" style="width:75%" class="float-right btn btn-success mt-4 mr-5">Place Order</a>
+        </div>
     </div>
 </section>
 
- <script>
-    function changeQuantity(cartId , proId , count)
-    {
+<script>
+    function changeQuantity(cartId, proId, count) {
         let quantity = parseInt(document.getElementById(proId).innerHTML)
         count = parseInt(count)
 
         $.ajax({
-            url:'/change-product-quantity',
-            data:{
-                cart:cartId , 
-                product : proId , 
-                count:count,
-                quantity:quantity
+            url: '/change-product-quantity',
+            data: {
+                cart: cartId,
+                product: proId,
+                count: count,
+                quantity: quantity
             },
-            method:'post',
-            success:(response)=>{
-                if(response.removeProduct)
-                {
+            method: 'post',
+            success: (response) => {
+                if (response.removeProduct) {
                     alert("Product removed from cart")
                     location.reload()
                 }
-                else
-                {
-                    document.getElementById(proId).innerHTML = quantity+count
+                else {
+                    document.getElementById(proId).innerHTML = quantity + count
                 }
             }
         })
     }
- </script>
+</script>

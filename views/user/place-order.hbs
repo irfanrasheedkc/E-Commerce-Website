@@ -19,54 +19,100 @@
     }
 </style>
 <form method="post" id="checkout-form">
-<div class="row">
-    <div class="column mt-5">
-        <div class="container" style="margin:auto ; width:70%">
-            <h3 align="center">Enter Address Details</h3>
-            <div class="form-group">
-                <label for="">Address</label>
-                <input type="text" name="address" class="form-control" id="address" placeholder="address">
+    <div class="row">
+        <div class="column mt-5">
+            <div class="container" style="margin:auto ; width:70%">
+                <h3 align="center">Enter Address Details</h3>
+                <div class="form-group">
+                    <label for="">Address</label>
+                    <input type="text" name="address" class="form-control" id="address" placeholder="address">
+                </div>
+                <div class="form-group">
+                    <label for="">Pincode</label>
+                    <input type="text" pattern="[0-9]{6}" maxlength="6" name="pincode" class="form-control" id="pincode"
+                        placeholder="Pincode">
+                </div>
+                <div class="form-group">
+                    <label for="">Mobile</label>
+                    <input type="tel" name="mobile" class="form-control" id="mobile" placeholder="Mobile Number">
+                    <input type="text" name="userId" id="" value="{{user._id}}" hidden>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="">Pincode</label>
-                <input type="text" pattern="[0-9]{6}" maxlength="6" name="pincode" class="form-control"
-                    id="pincode" placeholder="Pincode">
-            </div>
-            <div class="form-group">
-                <label for="">Mobile</label>
-                <input type="tel" name="mobile" class="form-control" id="mobile"
-                    placeholder="Mobile Number">
-                <input type="text" name="userId" id="" value="{{user._id}}" hidden>
-            </div>
-        </div>
 
-    </div> 
-    <div class="column mt-5">
-        <div style="max-width:50%; border:1px solid black;" align="left" class="div2">
-            <h6><b>Total Price: <span>&#8377;</span>{{total}}/-</b></h6>
-            <br>
-            <hr>
-            <p>Please select payment method:</p>
-              <input type="radio" id="cod" name="payment_method" value="cod">
-              <label for="html">Cash On Delivery</label><br>
-              <input type="radio" id="online" name="payment_method" value="online">
-              <label for="css">Online Payment</label><br>
-            <button class="btn btn-primary float-right" type="submit">Checkout</button>
+        </div>
+        <div class="column mt-5">
+            <div style="max-width:50%; border:1px solid black;" align="left" class="div2">
+                <h6><b>Total Price: <span>&#8377;</span>{{total}}/-</b></h6>
+                <br>
+                <hr>
+                <p>Please select payment method:</p>
+                  <input type="radio" id="cod" name="payment_method" value="cod">
+                  <label for="html">Cash On Delivery</label><br>
+                  <input type="radio" id="online" name="payment_method" value="online">
+                  <label for="css">Online Payment</label><br>
+                <button class="btn btn-primary float-right" type="submit">Checkout</button>
+            </div>
         </div>
     </div>
-</div>
 </form>
 <script>
-    $("#checkout-form").submit((e)=>{
+    $("#checkout-form").submit((e) => {
         e.preventDefault()
         $.ajax({
-            url:'/place-order',
-            method:'post',
-            data:$('#checkout-form').serialize(),
-            success:(response)=>{
-                if(response.status)
-                    location.href='/order-success'
+            url: '/place-order',
+            method: 'post',
+            data: $('#checkout-form').serialize(),
+            success: (response) => {
+                if (response.codSuccess)
+                    location.href = '/order-success'
+                else {
+                    razorpayPayment(response)
+                }
             }
         })
     })
+
+    function razorpayPayment(order) {
+        console.log("reached here")
+        var options = {
+            "key": "rzp_test_XesQE3GAjOyV4W", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Shopping cart Irfan",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                alert(response.razorpay_payment_id);
+                alert(response.razorpay_order_id);
+                alert(response.razorpay_signature)
+
+                verifyPayment(response , order)
+            },
+            "prefill": {
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9999999999"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+    function verifyPayment(payment , order)
+    {
+        $.ajax({
+            url:'/verify-payment' ,
+            data:{
+                paument,
+                order
+            },
+            method:'post'
+        })
+    }
 </script>

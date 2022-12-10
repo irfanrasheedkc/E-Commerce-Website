@@ -196,8 +196,16 @@ module.exports = {
                     }
                 }
             ]).toArray()    
-            console.log(total[0].total);
-            resolve(total[0].total)
+            if(total[0])
+            {
+                console.log(total[0].total);
+                resolve(total[0].total)
+            }
+            else{
+                console.log(0)
+                resolve(0)
+            }
+                
         })
     },
     placeOrder:(order , products , total)=>{

@@ -1,5 +1,6 @@
 const { response } = require('express');
 var express = require('express');
+const res = require('express/lib/response.js');
 var router = express.Router();
 const productHelpers = require('../helpers/product-helpers.js');
 const userHelpers = require('../helpers/user-helpers')
@@ -112,9 +113,26 @@ router.post('/place-order' ,async (req , res)=>{
   let products = await userHelpers.getCartProductList(req.body.userId)
   let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
   userHelpers.placeOrder(req.body , products , totalPrice).then((response)=>{
-    res.json(req.body);
+    res.json({status:true});
   })
   console.log(req.body)
+})
+
+router.get('/order-success' , (req , res)=>{
+  console.log("\n\n\n\nReached here")
+  res.render('user/order-success' , {user:req.session.user})
+})
+
+router.get('/orders' , async(req , res)=>{
+  let orders =  await userHelpers.getUserOrders(req.session.user._id)
+  res.render('user/orders' , {user:req.session.user , orders})
+})
+
+router.get('/view-order-products' , async(req , res)=>{
+  let products = await userHelpers.getOrderProducts(req.query.id)
+  console.log("Products are this:");
+  console.log(products)
+  res.render('user/view-order-products' , {user:req.session.user , products})
 })
 
 module.exports = router;

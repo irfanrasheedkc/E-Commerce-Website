@@ -6,7 +6,7 @@ const productHelpers = require('../helpers/product-helpers.js');
 const userHelpers = require('../helpers/user-helpers')
 
 const verifyLogin = (req, res, next) => {
-  if (req.session.loggedIn) {
+  if (req.session.userLoggedIn) {
     next()
   } else {
     res.redirect('/login')
@@ -26,19 +26,20 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/login', function (req, res) {
-  if (req.session.loggedIn) {
+  if (req.session.user) {
     res.redirect('/');
   } else {
-    res.render('user/login', { "loginErr": req.session.loginError });
-    req.session.loginError = false
+    res.render('user/login', { "loginErr": req.session.userLoginError });
+    req.session.userLoginError = false
   }
 })
 
 router.post('/signup', function (req, res) {
   userHelpers.doSignup(req.body).then((response) => {
     console.log(response)
-    req.session.loggedIn = true
     req.session.user = response
+    req.session.user.loggedIn = true
+    res.redirect('/')
   })
 })
 
@@ -49,19 +50,21 @@ router.get('/signup', function (req, res) {
 router.post('/login', (req, res) => {
   userHelpers.doLogin(req.body).then((response) => {
     if (response.status) {
-      req.session.loggedIn = "Login failed"
       req.session.user = response.user
+      req.session.user.loggedIn = "Login failed"
+      
       res.redirect('/')
     }
     else {
-      req.session.loginError = true
+      req.session.userLoginError = true
       res.redirect('/login')
     }
   })
 })
 
 router.get('/logout', (req, res) => {
-  req.session.destroy();
+  req.session.user = null;
+  req.session.userLoggedIn = false
   res.redirect('/');
 })
 

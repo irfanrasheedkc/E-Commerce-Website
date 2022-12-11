@@ -141,7 +141,16 @@ router.get('/view-order-products' , async(req , res)=>{
 })
 
 router.post('/verify-payment' , (req,res)=>{
-
+  userHelpers.verifyPayment(req.body).then(()=>{
+    console.log(req.body)
+    userHelpers.changePaymentStatus(req.body['order[receipt]']).then(()=>{
+      console.log("Payment Success")
+      res.json({status:true})
+    })
+  }).catch(()=>{
+    console.log("Error");
+    res.json({status:false , errMsg:''})
+  })
 })
 
 module.exports = router;

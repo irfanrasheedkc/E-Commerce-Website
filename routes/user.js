@@ -50,6 +50,7 @@ router.get('/signup', function (req, res) {
 router.post('/login', (req, res) => {
   userHelpers.doLogin(req.body).then((response) => {
     if (response.status) {
+      req.session.userLoggedIn = true
       req.session.user = response.user
       req.session.user.loggedIn = "Login failed"
       
